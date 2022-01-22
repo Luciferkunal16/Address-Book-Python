@@ -2,12 +2,17 @@ import logging
 
 from AddressBook.contact import Contact
 
-logging.basicConfig(filename='address_book_log.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-logging.warning('This will get logged to a file')
-
 
 class AddressBookMain:
-    list_of_contact = list()
+    list_of_contact = dict()
+    logging.basicConfig(filename="address_book_log.log",
+                        format='%(asctime)s %(message)s',
+                        filemode='w')
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    def __init__(self):
+        self = dict()
 
     def add_person(self):
         """
@@ -23,31 +28,36 @@ class AddressBookMain:
             phone_number = input("Enter the Phone Number=")
             email = input("Enter the Email Address=")
             person = Contact(first_name, last_name, city, state, zip, phone_number, email)
-            self.list_of_contact.append(person.get_all_detail())
+            self.list_of_contact[first_name] = person.get_all_detail()
         except Exception as e:
             print(e)
-            logging.info()
-            logging.info()
+            self.logger.error("Error is {} ".format(e))
+            self.logger.info()
 
     def display_all_contact(self):
         """
 
         :return:
         """
-        print("Address Book is")
-        for list in self.list_of_contact:
-            for contact in list:
-                print(contact)
+        if bool(self.list_of_contact):
+            print("Address Book is")
+            for i in self.list_of_contact.values():
+                print(i)
+        else:
+            print("Address book is Empty")
 
-    # def edit_contact(self):
-    #     f_name = input("Enter the First Name ")
-    #     for i in range(0,1):
-    #         edit_person=Contact(i)
-    #         print(edit_person)
-    #
-    #
-    #
-    #         print("All strings with given substring are : ")
+    def delete_contact(self):
+        try:
+
+            f_name = input("Enter the First Name of whose Contact you wan to delete")
+            if f_name in self.list_of_contact.keys():
+                self.list_of_contact.pop(f_name)
+                print("Contact is Deleted!!!!!!!")
+            else:
+                print("Contact Not Exist")
+        except Exception as err:
+            logging.error(err)
+            print(err)
 
     def menu(self, inp):
         """
@@ -55,7 +65,7 @@ class AddressBookMain:
         :param inp: choice
         :return:function
         """
-        choice = {1: address.add_person, 2: address.display_all_contact, 3: exit}
+        choice = {1: address.add_person, 2: address.display_all_contact, 3: address.delete_contact, 4: exit}
         return choice.get(inp)()
 
 
@@ -65,16 +75,15 @@ if __name__ == "__main__":
         choice = {}
         inp = 0
         address = AddressBookMain()
-        address.add_person()
-        address.edit_contact()
-        # while (inp != 3):
-        #     print("Welcome to Address Book Program")
-        #     print("1)Add person")
-        #     print("2)Show Address Book")
-        #     print("3)Exit")
-        #     inp = int(input("Enter your choice"))
-        #     address.menu(inp)
+
+        while inp != 4:
+            print("Welcome to Address Book Program")
+            print("1)Add person")
+            print("2)Show Address Book")
+            print("3)Delete Contact")
+            print("4)Exit")
+            inp = int(input("Enter your choice"))
+            address.menu(inp)
     except Exception as e:
         print(e)
-        logging.INFO
-        logging.error(e)
+        address.logger.error("Error is this ={} ".format(e))
