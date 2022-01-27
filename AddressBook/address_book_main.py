@@ -2,30 +2,35 @@ import logging
 
 from AddressBook.contact import Contact
 
+logging.basicConfig(filename="address_book_log.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w')
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 
 class AddressBookMain:
-    list_of_contact = dict()
-    logging.basicConfig(filename="address_book_log.log",
-                        format='%(asctime)s %(message)s',
-                        filemode='w')
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
 
-    def add_person(self,first_name,last_name,city,state,zip,phone_number,email):
+    def __init__(self):
+        self.list_of_contact = dict()
+
+    def add_person(self):
         """
-
-        :return:
+        :return:updated list of contact
         """
         try:
-            # first_name = input("Enter the First name=")
-            # last_name = input("Enter the Last name=")
-            # city = input("Enter the City=")
-            # state = input("Enter the State=")
-            # zip = input("Enter the zip code=")
-            # phone_number = input("Enter the Phone Number=")
-            # email = input("Enter the Email Address=")
+
+            first_name = input("Enter the First name=")
+            last_name = input("Enter the Last name=")
+            city = input("Enter the City=")
+            state = input("Enter the State=")
+            zip = input("Enter the zip code=")
+            phone_number = input("Enter the Phone Number=")
+            email = input("Enter the Email Address=")
             person = Contact(first_name, last_name, city, state, zip, phone_number, email)
-            self.list_of_contact.update({first_name:person.get_all_detail()})
+            self.list_of_contact.update({first_name: person.get_all_detail()})
+            return self.list_of_contact.values()
         except Exception as e:
             print(e)
             self.logger.error("Error is {} ".format(e))
@@ -33,7 +38,7 @@ class AddressBookMain:
 
     def display_all_contact(self):
         """
-
+        Print list of contact available i list
         :return:
         """
         if bool(self.list_of_contact):
@@ -43,7 +48,12 @@ class AddressBookMain:
         else:
             print("Address book is Empty")
 
-    def delete_contact(self,f_name):
+    def delete_contact(self, f_name):
+        """
+
+        :param f_name: First Name of Contact person
+        :return:True if Delete Successfull and False if Unsuccessfull
+        """
         try:
 
             # f_name = input("Enter the First Name of whose Contact you wan to delete")
@@ -60,7 +70,7 @@ class AddressBookMain:
 
     def edit_contact(self):
         """
-
+        for Editing the contact based on First Name
         :return:
         """
         f_name = input("Enter the First name whose conact you want to  edit")
@@ -76,7 +86,7 @@ class AddressBookMain:
             self.list_of_contact.update({f_name: person.get_all_detail()})
         else:
             print("Wrong Name or Conact Not Exist")
-            self.logger.error("Wrong Name or Conact Not Exist")
+            self.logger.error("Wrong Name or Contact Not Exist")
 
     def menu(self, inp):
         """
