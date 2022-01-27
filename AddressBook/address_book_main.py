@@ -13,6 +13,7 @@ logger.setLevel(logging.DEBUG)
 class AddressBookMain:
 
     def __init__(self):
+
         self.list_of_contact = dict()
 
     def add_person(self):
@@ -94,27 +95,27 @@ class AddressBookMain:
         :param inp: choice
         :return:function
         """
-        choice = {1: address.add_person, 2: address.display_all_contact, 3: address.delete_contact,
-                  4: address.edit_contact, 5: exit}
+        choice = {1: self.add_person, 2: self.display_all_contact, 3: self.delete_contact,
+                  4: self.edit_contact}
         return choice.get(inp)()
 
-
-if __name__ == "__main__":
-    print("===============================")
-    try:
-        choice = {}
-        inp = 0
-        address = AddressBookMain()
-
-        while inp != 5:
+    def operation(self):
+        print("===============================")
+        try:
+            choice = {}
+            inp = 0
+            address = AddressBookMain()
             print("Welcome to Address Book Program")
             print("1)Add person")
             print("2)Show Address Book")
             print("3)Delete Contact")
             print("4)Edit Contact")
-            print("5)Exit")
             inp = int(input("Enter your choice"))
+
+
             address.menu(inp)
-    except Exception as e:
-        print(e)
-        address.logger.error("Error is this ={} ".format(e))
+        except Exception as e:
+            print(e)
+            address.logger.error("Error is this ={} ".format(e))
+
+
