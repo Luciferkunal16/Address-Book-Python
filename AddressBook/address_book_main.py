@@ -12,8 +12,8 @@ logger.setLevel(logging.DEBUG)
 
 class AddressBookMain:
 
-    def __init__(self,address_book_name):
-        self.address_book_name=address_book_name
+    def __init__(self, address_book_name):
+        self.address_book_name = address_book_name
         self.list_of_contact = dict()
 
     def add_person(self):
@@ -21,17 +21,23 @@ class AddressBookMain:
         :return:updated list of contact
         """
         try:
-
             first_name = input("Enter the First name=")
-            last_name = input("Enter the Last name=")
-            city = input("Enter the City=")
-            state = input("Enter the State=")
-            zip = input("Enter the zip code=")
-            phone_number = input("Enter the Phone Number=")
-            email = input("Enter the Email Address=")
-            person = Contact(first_name, last_name, city, state, zip, phone_number, email)
-            self.list_of_contact.update({first_name: person.get_all_detail()})
-            return self.list_of_contact.values()
+            if first_name in self.list_of_contact.keys():
+                print("Contact Already Exist!!! No Duplicate Contact Allowed ")
+            else:
+                last_name = input("Enter the Last name=")
+                city = input("Enter the City=")
+                state = input("Enter the State=")
+                zip = input("Enter the zip code=")
+                phone_number = input("Enter the Phone Number=")
+                email = input("Enter the Email Address=")
+                detail_obj = {"first_name": first_name, "last_name": last_name, "city": city, "state": state,
+                              "zip": zip, "phone_number": phone_number, "email": email}
+
+                person = Contact(detail_obj)
+                self.list_of_contact.update({first_name: person})
+
+                return self.list_of_contact.values()
         except Exception as e:
             print(e)
             self.logger.error("Error is {} ".format(e))
@@ -44,8 +50,9 @@ class AddressBookMain:
         """
         if bool(self.list_of_contact):
             print("Address Book is")
-            for k, y in self.list_of_contact.items():
-                print(y)
+            for values in self.list_of_contact.values():
+                print(values.get_all_details())
+
         else:
             print("Address book is Empty")
 
@@ -74,7 +81,7 @@ class AddressBookMain:
         for Editing the contact based on First Name
         :return:
         """
-        f_name = input("Enter the First name whose conact you want to  edit")
+        f_name = input("Enter the First name whose contact you want to  edit")
         if f_name in self.list_of_contact:
             last_name = input("Enter the Last Name")
             city = input("Enter the City=")
@@ -82,9 +89,11 @@ class AddressBookMain:
             zip = input("Enter the zip code=")
             phone_number = input("Enter the Phone Number=")
             email = input("Enter the Email Address=")
-            person = Contact(f_name, last_name, city, state, zip, phone_number, email)
+            detail_obj = {"first_name": f_name, "last_name": last_name, "city": city, "state": state,
+                          "zip": zip, "phone_number": phone_number, "email": email}
+            person = Contact(detail_obj)
             self.list_of_contact.pop(f_name)
-            self.list_of_contact.update({f_name: person.get_all_detail()})
+            self.list_of_contact.update({f_name: person})
         else:
             print("Wrong Name or Conact Not Exist")
             self.logger.error("Wrong Name or Contact Not Exist")
@@ -96,23 +105,33 @@ class AddressBookMain:
         :return:function
         """
         choice = {1: self.add_person, 2: self.display_all_contact, 3: self.delete_contact,
-                  4: self.edit_contact,}
+                  4: self.edit_contact, 5: self.search_by_city}
         return choice.get(inp)()
 
-    def operation(self,address_book_name):
+    def operation(self, address_book_name):
         print("===============================")
         try:
             choice = {}
             inp = 0
-
 
             print("Welcome to Address Book Program")
             print("1)Add person")
             print("2)Show Address Book")
             print("3)Delete Contact")
             print("4)Edit Contact")
+            print("5)Search By City")
             inp = int(input("Enter your choice"))
             self.menu(inp)
         except Exception as e:
             print(e)
             logger.error("Error is this ={} ".format(e))
+
+    def search_by_city(self):
+        print("Enter the City name")
+        city = input()
+        print("People Live in city {}".format(city))
+        for i in self.list_of_contact.values():
+            if city == i.get_city():
+                print(i.get_name())
+
+

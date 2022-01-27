@@ -54,6 +54,6 @@ if __name__ == "__main__":
             elif mul_obj == 4:
                 exit()
     except Exception as err:
-        print(err)
+        print(e)
         logging.ERROR("error occured-{}".format(err))
 
