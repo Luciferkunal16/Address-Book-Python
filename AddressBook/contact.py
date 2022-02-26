@@ -21,7 +21,22 @@ class Contact:
             self.zip), "Phone Number is {}".format(self.phone_number), "Email is {}".format(self.email)
 
     def get_city(self):
+        """
+
+        :return: city of person
+        """
         return self.city
 
+    def get_state(self):
+        """
+
+        :return: State of person
+        """
+        return self.state
+
     def get_name(self):
-        return "NAME is {} {}".format(self.first_name,self.last_name)
+        """
+
+        :return: Full name of Person
+        """
+        return "NAME is {} {}".format(self.first_name, self.last_name)

@@ -11,6 +11,9 @@ logger.setLevel(logging.DEBUG)
 
 
 class AddressBookMain:
+    """
+    Program for operations of AddressBook
+    """
 
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
@@ -18,6 +21,7 @@ class AddressBookMain:
 
     def add_person(self):
         """
+        use to add persn to the list by inputing details of person details
         :return:updated list of contact
         """
         try:
@@ -105,10 +109,15 @@ class AddressBookMain:
         :return:function
         """
         choice = {1: self.add_person, 2: self.display_all_contact, 3: self.delete_contact,
-                  4: self.edit_contact, 5: self.search_by_city}
+                  4: self.edit_contact, 5: self.search_by_city, 6:self.search_by_state, 7:self.sort_contact}
         return choice.get(inp)()
 
-    def operation(self, address_book_name):
+    def operation(self ):
+        """
+        Print The menu
+        :param address_book_name:AddressBook Name is given
+        :return:
+        """
         print("===============================")
         try:
             choice = {}
@@ -120,6 +129,8 @@ class AddressBookMain:
             print("3)Delete Contact")
             print("4)Edit Contact")
             print("5)Search By City")
+            print("6)Search By State")
+            print("7)Sorted Contact List")
             inp = int(input("Enter your choice"))
             self.menu(inp)
         except Exception as e:
@@ -127,11 +138,31 @@ class AddressBookMain:
             logger.error("Error is this ={} ".format(e))
 
     def search_by_city(self):
+        """
+
+        :return:print list of person live in specified City
+        """
         print("Enter the City name")
         city = input()
         print("People Live in city {}".format(city))
         for i in self.list_of_contact.values():
             if city == i.get_city():
                 print(i.get_name())
+    def search_by_state(self):
+        """
 
+        :return: print list of person live in specified state
+        """
+        state=input("Enter The State Name")
+        print("People Live in State {}".format(state))
+        for i in self.list_of_contact.values():
+            if state == i.get_state():
+                print(i.get_name())
+    def sort_contact(self):
+        """
 
+        :return: sorted lis of contacts
+        """
+        print("Sorted Contact List is ")
+        for i in self.list_of_contact.values():
+            print(sorted(i.get_all_details()))
