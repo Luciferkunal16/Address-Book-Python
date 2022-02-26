@@ -1,6 +1,7 @@
 import logging
 
-from AddressBook.contact import Contact
+from AddressBookFactoryPattern.address_book_interface import AddressBookInterface
+from AddressBookFactoryPattern.contact import Contact
 
 logging.basicConfig(filename="address_book_log.log",
                     format='%(asctime)s %(message)s',
@@ -10,10 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-class AddressBookMain:
-    """
-    Program for operations of AddressBook
-    """
+class AddressBook(AddressBookInterface):
 
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
@@ -109,10 +107,10 @@ class AddressBookMain:
         :return:function
         """
         choice = {1: self.add_person, 2: self.display_all_contact, 3: self.delete_contact,
-                  4: self.edit_contact, 5: self.search_by_city, 6:self.search_by_state, 7:self.sort_contact}
+                  4: self.edit_contact, 5: self.search_by_city, 6: self.search_by_state, 7: self.sort_contact}
         return choice.get(inp)()
 
-    def operation(self ):
+    def operation(self):
         """
         Print The menu
         :param address_book_name:AddressBook Name is given
@@ -122,17 +120,18 @@ class AddressBookMain:
         try:
             choice = {}
             inp = 0
-
-            print("Welcome to Address Book Program")
-            print("1)Add person")
-            print("2)Show Address Book")
-            print("3)Delete Contact")
-            print("4)Edit Contact")
-            print("5)Search By City")
-            print("6)Search By State")
-            print("7)Sorted Contact List")
-            inp = int(input("Enter your choice"))
-            self.menu(inp)
+            while (choice != 8):
+                print("Welcome to Address Book Program")
+                print("1)Add person")
+                print("2)Show Address Book")
+                print("3)Delete Contact")
+                print("4)Edit Contact")
+                print("5)Search By City")
+                print("6)Search By State")
+                print("7)Sorted Contact List")
+                print("8)Exit")
+                inp = int(input("Enter your choice"))
+                self.menu(inp)
         except Exception as e:
             print(e)
             logger.error("Error is this ={} ".format(e))
@@ -148,16 +147,18 @@ class AddressBookMain:
         for i in self.list_of_contact.values():
             if city == i.get_city():
                 print(i.get_name())
+
     def search_by_state(self):
         """
 
         :return: print list of person live in specified state
         """
-        state=input("Enter The State Name")
+        state = input("Enter The State Name")
         print("People Live in State {}".format(state))
         for i in self.list_of_contact.values():
             if state == i.get_state():
                 print(i.get_name())
+
     def sort_contact(self):
         """
 

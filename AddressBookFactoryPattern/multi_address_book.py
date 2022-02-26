@@ -1,27 +1,25 @@
 import logging
 
-import self as self
+from AddressBookFactoryPattern.address_book import AddressBook
 
-from AddressBook.address_book_main import AddressBookMain
+logging.basicConfig(filename="address_book_log.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w')
 
 
-class MulAddressBook:
+class MultiAddressBook:
     def __init__(self):
         self.book_dict = {}
 
     def display_list_of_addressbook(self):
         """
-        used to display all existing address books
+
         :return: key value of Dictionary
         """
         for i in self.book_dict.keys():
             print(i)
 
     def operation(self):
-        """
-        used for creating and opening existing Book
-        :return:
-        """
 
         menu_opt = 0
 
@@ -33,7 +31,7 @@ class MulAddressBook:
                         "1.Create New Address Book  2.Open Existing Address Book 3: Display All Address Book Name 4.Exit"))
                 if menu_opt == 1:
                     address_book_name = input("Enter the AddressBook name")
-                    book_obj = AddressBookMain(address_book_name)
+                    book_obj = AddressBook(address_book_name)
                     book_obj.operation()
                     self.book_dict[address_book_name] = book_obj
 
@@ -56,8 +54,3 @@ class MulAddressBook:
         except Exception as err:
             print(err)
             logging.ERROR("error occured-{}".format(err))
-
-
-if __name__ == "__main__":
-    obj = MulAddressBook()
-    obj.operation()

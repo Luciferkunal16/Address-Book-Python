@@ -1,7 +1,8 @@
-import logging
+from AddressBookFactoryPattern.contact_interface import contact
 
 
-class Contact:
+class Contact(contact):
+
     def __init__(self, contact_obj={}):
         self.first_name = contact_obj.get("first_name")
         self.last_name = contact_obj.get("last_name")
