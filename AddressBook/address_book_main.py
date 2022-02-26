@@ -109,10 +109,10 @@ class AddressBookMain:
         :return:function
         """
         choice = {1: self.add_person, 2: self.display_all_contact, 3: self.delete_contact,
-                  4: self.edit_contact, 5: self.search_by_city, 6:self.search_by_state, 7:self.sort_contact}
+                  4: self.edit_contact, 5: self.search_by_city}
         return choice.get(inp)()
 
-    def operation(self ):
+    def operation(self):
         """
         Print The menu
         :param address_book_name:AddressBook Name is given
@@ -129,8 +129,7 @@ class AddressBookMain:
             print("3)Delete Contact")
             print("4)Edit Contact")
             print("5)Search By City")
-            print("6)Search By State")
-            print("7)Sorted Contact List")
+
             inp = int(input("Enter your choice"))
             self.menu(inp)
         except Exception as e:
@@ -148,21 +147,3 @@ class AddressBookMain:
         for i in self.list_of_contact.values():
             if city == i.get_city():
                 print(i.get_name())
-    def search_by_state(self):
-        """
-
-        :return: print list of person live in specified state
-        """
-        state=input("Enter The State Name")
-        print("People Live in State {}".format(state))
-        for i in self.list_of_contact.values():
-            if state == i.get_state():
-                print(i.get_name())
-    def sort_contact(self):
-        """
-
-        :return: sorted lis of contacts
-        """
-        print("Sorted Contact List is ")
-        for i in self.list_of_contact.values():
-            print(sorted(i.get_all_details()))
