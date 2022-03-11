@@ -47,16 +47,12 @@ class MulAddressBook:
         """
 
         menu_opt = 0
-
         try:
-
             while menu_opt != 5:
                 menu_opt = int(
                     input(
                         "1.Create New Address Book  2.Open Existing Address Book 3: Display All Address Book Name 4.Exit"))
                 self.menu(menu_opt)
-
-
         except Exception as err:
             print(err)
             logging.ERROR("error occured-{}".format(err))
@@ -73,5 +69,9 @@ class MulAddressBook:
 
 
 if __name__ == "__main__":
-    obj = MulAddressBook()
-    obj.operation()
+    try:
+        obj = MulAddressBook()
+        obj.operation()
+    except Exception as e:
+        logging.error(e)
+        print(e)
