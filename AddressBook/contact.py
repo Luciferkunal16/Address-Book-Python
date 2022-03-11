@@ -40,3 +40,45 @@ class Contact:
         :return: Full name of Person
         """
         return "NAME is {} {}".format(self.first_name, self.last_name)
+
+    def set_last_name(self, l_name):
+        """
+        For setting the first name
+        :return:
+        """
+        self.last_name = l_name
+
+    def set_city(self, city):
+        """
+        For seting  the first name
+        :return:
+        """
+        self.city = city
+
+    def set_state(self, state):
+        """
+        For setting  the State
+        :return:
+        """
+        self.state = state
+
+    def set_zip_code(self, zip_code):
+        """
+        For setting  the zip code
+        :return:
+        """
+        self.zip = zip_code
+
+    def set_phone_number(self, phone_number):
+        """
+        For setting  the phone Number
+        :return:
+        """
+        self.phone_number = phone_number
+
+    def set_email(self, email):
+        """
+        For setting  the email
+        :return:
+        """
+        self.email = email

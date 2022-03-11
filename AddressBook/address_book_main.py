@@ -87,19 +87,22 @@ class AddressBookMain:
         """
         f_name = input("Enter the First name whose contact you want to  edit")
         if f_name in self.list_of_contact:
-            last_name = input("Enter the Last Name")
-            city = input("Enter the City=")
-            state = input("Enter the State=")
-            zip = input("Enter the zip code=")
-            phone_number = input("Enter the Phone Number=")
-            email = input("Enter the Email Address=")
-            detail_obj = {"first_name": f_name, "last_name": last_name, "city": city, "state": state,
-                          "zip": zip, "phone_number": phone_number, "email": email}
-            person = Contact(detail_obj)
-            self.list_of_contact.pop(f_name)
-            self.list_of_contact.update({f_name: person})
+            personObj = self.list_of_contact.get(f_name)
+            print('Enter what you want to edit')
+            print('1)Last Name')
+            print('2)City')
+            print('3)State')
+            print('4)Zip code')
+            print('5)Phone_number')
+            print('6)Email_Address')
+            choice = int(input('Enter the Choice in numeric'))
+            update_value = input("enter the updated value")
+            update_dict = {1: personObj.set_last_name, 2: personObj.set_city, 3: personObj.set_state,
+                           4: personObj.set_zip_code, 5: personObj.set_phone_number, 6: personObj.set_email}
+            update_dict.get(choice)(update_value)
+            self.list_of_contact.update({f_name: personObj})
         else:
-            print("Wrong Name or Conact Not Exist")
+            print("Wrong Name or Contact Not Exist")
             self.logger.error("Wrong Name or Contact Not Exist")
 
     def menu(self, inp):
