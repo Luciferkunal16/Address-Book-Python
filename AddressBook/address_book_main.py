@@ -21,7 +21,7 @@ class AddressBookMain:
 
     def add_person(self):
         """
-        use to add persn to the list by inputing details of person details
+        use to add person to the list by inputing details of person details
         :return:updated list of contact
         """
         try:
